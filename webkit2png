@@ -160,6 +160,8 @@ class WebkitLoad (Foundation.NSObject, WebKit.protocols.WebFrameLoadDelegate):
 
         if self.options.ignore_ssl_check:
             Foundation.NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(objc.YES, nsurl.host())
+            # Disables App Transport Security (ATS) HTTPS requirement introduced in OS X El Capitan
+            AppKit.NSBundle.mainBundle().infoDictionary()['NSAppTransportSecurity'] = dict(NSAllowsArbitraryLoads = True)
 
         print "Fetching", nsurl, "..."
         self.resetWebview(webview)
